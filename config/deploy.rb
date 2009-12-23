@@ -18,9 +18,11 @@ set(:deploy_to) { File.join("", "home", user, application) }
 
 # URL of your source repository. This is the default one that comes on 
 # every Brightbox, you can use your own (we'll let you :)
-set :repository, "."
-set :scm, :none
-set :deploy_via, :copy
+set :repository, "git://github.com/caius/HelloWorld.git"
+set :scm, :git
+set :deploy_via, :remote_cache
+# set :git_enable_submodules, 1
+ssh_options[:forward_agent] = true
 
 ### Other options you can set ##
 # Comma separated list of additional domains for Apache
