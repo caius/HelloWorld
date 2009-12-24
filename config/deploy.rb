@@ -94,7 +94,7 @@ ssh_options[:forward_agent] = true
 # timestamping.
 # You may need to adjust this value if you have hard coded static
 # assets, or other special cache requirements. The value is in seconds.
-# set :max_age, 315360000
+set :max_age, 315360000
 
 # SSH options. The forward agent option is used so that loopback logins
 # with keys work properly
