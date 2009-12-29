@@ -5,10 +5,10 @@ require 'brightbox/passenger'
 
 # The name of your application.  Used for deployment directory and filenames
 # and Apache configs. Should be unique on the Brightbox
-set :application, "helloworld"
+set :application, "helloworld2"
 
 # Primary domain name of your application. Used in the Apache configs
-set :domain, "caiustest-002.vm.brightbox.net"
+set :domain, "two.caiustest-002.vm.brightbox.net"
 
 ## List of servers
 server "caiustest-002.vm.brightbox.net", :app, :web, :db, :primary => true
@@ -32,8 +32,10 @@ ssh_options[:forward_agent] = true
 # Set the commands and gems that your application requires. e.g.
 # depend :remote, :gem, "will_paginate", ">=2.2.2"
 # depend :remote, :command, "brightbox"
+depend :remote, :apt, "libxml2-dev"
+depend :remote, :apt, "libxslt1-dev"
 depend :remote, :gem, "nokogiri", ">= 0"
-# 
+
 # Gem with a source (such as github)
 # depend :remote, :gem, "tmm1-amqp", ">=0.6.0", :source => "http://gems.github.com"
 # 
@@ -41,7 +43,7 @@ depend :remote, :gem, "nokogiri", ">= 0"
 # depend :remote, :gem, "rails", "=2.2.2"
 #
 # Set the apt packages your application or gems require. e.g.
-set :package_dependencies, %w(libxml2-dev libxslt1-dev)
+# set :package_dependencies, %w(libxml2-dev libxslt1-dev)
 
 ## Local Shared Area
 # These are the list of files and directories that you want
@@ -98,7 +100,7 @@ set :package_dependencies, %w(libxml2-dev libxslt1-dev)
 # timestamping.
 # You may need to adjust this value if you have hard coded static
 # assets, or other special cache requirements. The value is in seconds.
-set :max_age, "315360000"
+set :max_age, 315360000
 
 # SSH options. The forward agent option is used so that loopback logins
 # with keys work properly
