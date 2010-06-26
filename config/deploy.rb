@@ -11,7 +11,7 @@ set :application, "helloworld"
 set :domain, "caiustest-002.vm.brightbox.net"
 
 ## List of servers
-server "caiustest-002.vm.brightbox.net", :app, :web, :db, :primary => true
+server "caiustest-002.vm.brightbox.net", :app, :web, :db, :primary => true, :manual_config => true
 
 # Target directory for the application on the web and app servers.
 set(:deploy_to) { File.join("", "home", user, application) }
@@ -23,6 +23,8 @@ set :scm, :git
 set :deploy_via, :remote_cache
 # set :git_enable_submodules, 1
 ssh_options[:forward_agent] = true
+
+set :generate_webserver_config, false
 
 ### Other options you can set ##
 # Comma separated list of additional domains for Apache
@@ -90,6 +92,9 @@ set :package_dependencies, %w(libxml2-dev libxslt1-dev)
 # set :ssl_key, "/path/to/key/for/my_app.key
 # or
 # set :ssl_certificate, "name_of_installed_certificate"
+# set :ssl_certificate, "/etc/apache2/ssl/server.crt" 
+# set :ssl_key, "/etc/apache2/ssl/server.key" 
+# set :ssl_intermediate, "inter.crt"
 
 ## Static asset caching.
 # By default static assets served directly by the web server are
@@ -146,3 +151,11 @@ default_run_options[:pty] = true
 # :soft uses the standard touch tmp/restart.txt which leaves database connections
 # lingering until the workers time out
 # set :passenger_restart_strategy, :hard
+
+namespace :deploy do
+  namespace :rake_tasks do
+    task :singleton, :roles => :db, :only => {:primary => true} do
+      # Do nothing, overrides the brightbox gem implementation.
+    end
+  end
+end
