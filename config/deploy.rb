@@ -8,10 +8,10 @@ require 'brightbox/passenger'
 set :application, "helloworld"
 
 # Primary domain name of your application. Used in the Apache configs
-set :domain, "caiustest-002.vm.brightbox.net"
+set :domain, "public.srv-yzyyv.gb1.brightbox.com"
 
 ## List of servers
-server "caiustest-002.vm.brightbox.net", :app, :web, :db, :primary => true, :manual_config => true
+server "srv-yzyyv.gb1.brightbox.com", :app, :web, :db, :primary => true
 
 # Target directory for the application on the web and app servers.
 set(:deploy_to) { File.join("", "home", user, application) }
@@ -19,12 +19,13 @@ set(:deploy_to) { File.join("", "home", user, application) }
 # URL of your source repository. This is the default one that comes on 
 # every Brightbox, you can use your own (we'll let you :)
 set :repository, "git://github.com/caius/HelloWorld.git"
+set :branch, "cloudbox"
 set :scm, :git
 set :deploy_via, :remote_cache
 # set :git_enable_submodules, 1
 ssh_options[:forward_agent] = true
 
-set :generate_webserver_config, false
+# set :generate_webserver_config, false
 
 ### Other options you can set ##
 # Comma separated list of additional domains for Apache
@@ -32,18 +33,9 @@ set :generate_webserver_config, false
 
 ## Dependencies
 # Set the commands and gems that your application requires. e.g.
-# depend :remote, :gem, "will_paginate", ">=2.2.2"
-# depend :remote, :command, "brightbox"
+depend :remote, :apt, "libxml2-dev"
+depend :remote, :apt, "libxslt1-dev"
 depend :remote, :gem, "nokogiri", ">= 0"
-# 
-# Gem with a source (such as github)
-# depend :remote, :gem, "tmm1-amqp", ">=0.6.0", :source => "http://gems.github.com"
-# 
-# Specify your specific Rails version if it is not vendored
-# depend :remote, :gem, "rails", "=2.2.2"
-#
-# Set the apt packages your application or gems require. e.g.
-set :package_dependencies, %w(libxml2-dev libxslt1-dev)
 
 ## Local Shared Area
 # These are the list of files and directories that you want
